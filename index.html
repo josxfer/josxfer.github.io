@@ -2,246 +2,269 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Estampado</title>
-    <style>
-        :root {
-            --main-bg: #f0f4f8;
-            --card-bg: #ffffff;
-            --primary: #0077cc;
-            --accent: #00c2a8;
-            --text-color: #333;
-            --result-bg: #e0f7fa;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Estampado</title>
+  <style>
+    :root {
+      --main-bg: #f0f4f8;
+      --card-bg: #ffffff;
+      --primary: #0077cc;
+      --accent: #00c2a8;
+      --text-color: #333;
+      --result-bg: #e0f7fa;
+    }
 
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            margin: 0;
-            background: var(--main-bg);
-            color: var(--text-color);
-        }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: var(--main-bg);
+      color: var(--text-color);
+    }
 
+    .container {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 600px;
+      margin: 40px auto;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--primary);
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input,
+    select,
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    button {
+      margin-top: 20px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: var(--accent);
+    }
+
+    .result {
+      background: var(--result-bg);
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 30px;
+      font-size: 16px;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        margin: 20px;
+        padding: 15px;
+      }
+
+      input,
+      select,
+      button {
+        font-size: 14px;
+      }
+
+      @media (max-width: 600px) {
         .container {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 12px;
-            max-width: 600px;
-            margin: 40px auto;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            text-align: center;
-            color: var(--primary);
-        }
-
-        label {
-            display: block;
-            margin-top: 15px;
-            font-weight: bold;
+          margin: 20px;
+          padding: 15px;
         }
 
         input,
         select,
         button {
-            width: 100%;
-            padding: 10px;
-            margin-top: 8px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 16px;
-        }
-
-        button {
-            margin-top: 20px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        button:hover {
-            background-color: var(--accent);
+          font-size: 14px;
         }
 
         .result {
-            background: var(--result-bg);
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 30px;
-            font-size: 16px;
+          font-size: 14px;
+          padding: 12px;
         }
 
-        @media (max-width: 600px) {
-            .container {
-                margin: 20px;
-                padding: 15px;
-            }
-
-            input,
-            select,
-            button {
-                font-size: 14px;
-            }
+        h1 {
+          font-size: 20px;
         }
-    </style>
+      }
+
+    }
+  </style>
 </head>
 
 <body>
-    <div class="container">
-        <h1>Calculadora de Estampado</h1>
-        <h1>Texlab Colombia</h1>
+  <div class="container">
+    <h1>Calculadora de Estampado</h1>
+    <h1>Texlab Colombia</h1>
 
-        <label for="toalla">Tipo de toalla:</label>
-        <select id="toalla">
-            <option value="Nacional">Nacional</option>
-            <option value="Millonarios">Millonarios</option>
-            <option value="Stitch">Stitch</option>
-            <option value="Mariposas">Mariposas</option>
-        </select>
+    <label for="toalla">Tipo de toalla:</label>
+    <select id="toalla">
+      <option value="Nacional">Nacional</option>
+      <option value="Millonarios">Millonarios</option>
+      <option value="Stitch">Stitch</option>
+      <option value="Mariposas">Mariposas</option>
+    </select>
 
-        <label for="cantidad">Cantidad de toallas:</label>
-        <input type="number" id="cantidad" min="1" value="1">
+    <label for="cantidad">Cantidad de toallas:</label>
+    <input type="number" id="cantidad" min="1" value="1">
 
-        <button onclick="calcularMezcla()">Calcular</button>
-        <button onclick="limpiarFormulario()">Limpiar</button>
+    <button onclick="calcularMezcla()">Calcular</button>
+    <button onclick="limpiarFormulario()">Limpiar</button>
 
-        <div class="result" id="resultado" style="display:none;"></div>
-    </div>
+    <div class="result" id="resultado" style="display:none;"></div>
+  </div>
 
-    <script>
-        const catalogo = {
-            Nacional: {
-                base: 284,
-                colores: {
-                    Verde: { verde_base: 2.72, verde_fluor: 2.45, amarillo_base: 0.36 }
-                }
-            },
-            Millonarios: {
-                base: 334,
-                colores: {
-                    Azul: { azul_base: 2.14, azul_fluor: 3.39 }
-                }
-            },
-            Mariposas: {
-                colores: {
-                    "Azul": { base: 46.5, azul_base: 1.25, azul_fluor: 2 },
-                    "Azul Cielo": { base: 119.5, azul_base: 0.15, azul_fluor: 2.5},
-                    "Aguamarina": { base: 110, verde_fluor: 1.25,azul_fluor: 1.25, azul_base: { cantidad: 1, unidad: "gota" } }
-                }
-            }
-        };
-
-        const precios = {
-            base: 6.41,
-            verde_base: 82.45,
-            verde_fluor: 82.46,
-            amarillo_base: 72.32,
-            amarillo_fluor: 82.46,
-            azul_fluor: 90.71,
-            azul_base: 86.29,
-            rojo_base: 84.68,
-            violeta_fluor: 82.46,
-            negro: 31.92
-        };
-
-        const GOTA_EN_GRAMOS = 0.05;
-
-        function formatNumber(num) {
-            return num.toLocaleString('es-ES', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  <script>
+    const catalogo = {
+      Nacional: {
+        base: 284,
+        colores: {
+          Verde: { verde_base: 2.72, verde_fluor: 2.45, amarillo_base: 0.36 }
         }
-
-        function calcularMezcla() {
-            const tipo = document.getElementById('toalla').value;
-            const cantidad = parseInt(document.getElementById('cantidad').value);
-            const data = catalogo[tipo];
-
-            let resumenPigmentos = {};
-            let totalBase = 0;
-            let costoTotal = 0;
-
-            let resultado = `<strong>Resultados para ${cantidad} toallas (${tipo}):</strong><br>`;
-
-            for (const color in data.colores) {
-                resultado += `<u>Color: ${color}</u><br>`;
-                const infoColor = data.colores[color];
-                const baseColor = infoColor.base || data.base || 0;
-                const totalBaseColor = baseColor * cantidad;
-                totalBase += totalBaseColor;
-                const costoBase = totalBaseColor * precios.base;
-                costoTotal += costoBase;
-
-                resultado += `&nbsp;&nbsp;- Base: ${formatNumber(totalBaseColor)} g - Costo: $${formatNumber(costoBase)}<br>`;
-
-                for (const pigmento in infoColor) {
-                    if (pigmento === 'base') continue;
-
-                    let valor = infoColor[pigmento];
-                    let unidad = "g";
-                    let cantidadPigmento = 0;
-                    let cantidadEnGramos = 0;
-                    let costoPigmento = 0;
-
-                    if (typeof valor === "object") {
-                        cantidadPigmento = valor.cantidad * cantidad;
-                        unidad = valor.unidad === "gota" ? "gotas" : "g";
-                        if (unidad === "gotas") {
-                            cantidadEnGramos = cantidadPigmento * GOTA_EN_GRAMOS;
-                            costoPigmento = cantidadEnGramos * precios[pigmento];
-                            costoTotal += costoPigmento;
-                        }
-                    } else {
-                        cantidadPigmento = valor * cantidad;
-                        cantidadEnGramos = cantidadPigmento;
-                        costoPigmento = precios[pigmento] * cantidadPigmento;
-                        costoTotal += costoPigmento;
-                    }
-
-                    if (!resumenPigmentos[pigmento]) {
-                        resumenPigmentos[pigmento] = { gramos: 0, gotas: 0, costo: 0 };
-                    }
-
-                    if (unidad === "gotas") {
-                        resumenPigmentos[pigmento].gotas += cantidadPigmento;
-                        resumenPigmentos[pigmento].gramos += cantidadEnGramos;
-                        resumenPigmentos[pigmento].costo += costoPigmento;
-                        resultado += `&nbsp;&nbsp;- ${pigmento}: ${cantidadPigmento} gotas (${formatNumber(cantidadEnGramos)} g) - Costo: $${formatNumber(costoPigmento)}<br>`;
-                    } else {
-                        resumenPigmentos[pigmento].gramos += cantidadEnGramos;
-                        resumenPigmentos[pigmento].costo += costoPigmento;
-                        resultado += `&nbsp;&nbsp;- ${pigmento}: ${formatNumber(cantidadEnGramos)} g - Costo: $${formatNumber(costoPigmento)}<br>`;
-                    }
-                }
-                resultado += `<br>`;
-            }
-
-            resultado += `<strong>Total base usada:</strong> ${formatNumber(totalBase)} g<br><br>`;
-
-            resultado += `<strong>Resumen total por pigmento:</strong><br>`;
-            for (const pigmento in resumenPigmentos) {
-                const { gramos, gotas, costo } = resumenPigmentos[pigmento];
-                let linea = `${pigmento}: `;
-                if (gramos > 0) linea += `<strong>${formatNumber(gramos)} g</strong> `;
-                if (gotas > 0) linea += `(${gotas} gotas) `;
-                linea += ` - Costo: <strong>$${formatNumber(costo)}</strong><br>`;
-                resultado += linea;
-            }
-
-            resultado += `<br><strong>Costo total por ${cantidad} toallas:</strong> $${formatNumber(costoTotal)}<br>`;
-            resultado += `<strong>Costo por toalla:</strong> $${formatNumber(costoTotal / cantidad)}<br>`;
-
-            document.getElementById('resultado').innerHTML = resultado;
-            document.getElementById('resultado').style.display = 'block';
+      },
+      Millonarios: {
+        base: 334,
+        colores: {
+          Azul: { azul_base: 2.14, azul_fluor: 3.39 }
         }
-
-        function limpiarFormulario() {
-            document.getElementById('cantidad').value = 1;
-            document.getElementById('toalla').selectedIndex = 0;
-            document.getElementById('resultado').style.display = 'none';
+      },
+      Mariposas: {
+        colores: {
+          "Azul": { base: 46.5, azul_base: 1.25, azul_fluor: 2 },
+          "Azul Cielo": { base: 119.5, azul_base: 0.15, azul_fluor: 2.5 },
+          "Aguamarina": { base: 110, verde_fluor: 1.25, azul_fluor: 1.25, azul_base: { cantidad: 1, unidad: "gota" } }
         }
-    </script>
+      }
+    };
+
+    const precios = {
+      base: 6.41,
+      verde_base: 82.45,
+      verde_fluor: 82.46,
+      amarillo_base: 72.32,
+      amarillo_fluor: 82.46,
+      azul_fluor: 90.71,
+      azul_base: 86.29,
+      rojo_base: 84.68,
+      violeta_fluor: 82.46,
+      negro: 31.92
+    };
+
+    const GOTA_EN_GRAMOS = 0.05;
+
+    function formatNumber(num) {
+      return num.toLocaleString('es-ES', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+    }
+
+    function calcularMezcla() {
+      const tipo = document.getElementById('toalla').value;
+      const cantidad = parseInt(document.getElementById('cantidad').value);
+      const data = catalogo[tipo];
+
+      let resumenPigmentos = {};
+      let totalBase = 0;
+      let costoTotal = 0;
+
+      let resultado = `<strong>Resultados para ${cantidad} toallas (${tipo}):</strong><br>`;
+
+      for (const color in data.colores) {
+        resultado += `<u>Color: ${color}</u><br>`;
+        const infoColor = data.colores[color];
+        const baseColor = infoColor.base || data.base || 0;
+        const totalBaseColor = baseColor * cantidad;
+        totalBase += totalBaseColor;
+        const costoBase = totalBaseColor * precios.base;
+        costoTotal += costoBase;
+
+        resultado += `&nbsp;&nbsp;- Base: ${formatNumber(totalBaseColor)} g - Costo: $${formatNumber(costoBase)}<br>`;
+
+        for (const pigmento in infoColor) {
+          if (pigmento === 'base') continue;
+
+          let valor = infoColor[pigmento];
+          let unidad = "g";
+          let cantidadPigmento = 0;
+          let cantidadEnGramos = 0;
+          let costoPigmento = 0;
+
+          if (typeof valor === "object") {
+            cantidadPigmento = valor.cantidad * cantidad;
+            unidad = valor.unidad === "gota" ? "gotas" : "g";
+            if (unidad === "gotas") {
+              cantidadEnGramos = cantidadPigmento * GOTA_EN_GRAMOS;
+              costoPigmento = cantidadEnGramos * precios[pigmento];
+              costoTotal += costoPigmento;
+            }
+          } else {
+            cantidadPigmento = valor * cantidad;
+            cantidadEnGramos = cantidadPigmento;
+            costoPigmento = precios[pigmento] * cantidadPigmento;
+            costoTotal += costoPigmento;
+          }
+
+          if (!resumenPigmentos[pigmento]) {
+            resumenPigmentos[pigmento] = { gramos: 0, gotas: 0, costo: 0 };
+          }
+
+          if (unidad === "gotas") {
+            resumenPigmentos[pigmento].gotas += cantidadPigmento;
+            resumenPigmentos[pigmento].gramos += cantidadEnGramos;
+            resumenPigmentos[pigmento].costo += costoPigmento;
+            resultado += `&nbsp;&nbsp;- ${pigmento}: ${cantidadPigmento} gotas (${formatNumber(cantidadEnGramos)} g) - Costo: $${formatNumber(costoPigmento)}<br>`;
+          } else {
+            resumenPigmentos[pigmento].gramos += cantidadEnGramos;
+            resumenPigmentos[pigmento].costo += costoPigmento;
+            resultado += `&nbsp;&nbsp;- ${pigmento}: ${formatNumber(cantidadEnGramos)} g - Costo: $${formatNumber(costoPigmento)}<br>`;
+          }
+        }
+        resultado += `<br>`;
+      }
+
+      resultado += `<strong>Total base usada:</strong> ${formatNumber(totalBase)} g<br><br>`;
+
+      resultado += `<strong>Resumen total por pigmento:</strong><br>`;
+      for (const pigmento in resumenPigmentos) {
+        const { gramos, gotas, costo } = resumenPigmentos[pigmento];
+        let linea = `${pigmento}: `;
+        if (gramos > 0) linea += `<strong>${formatNumber(gramos)} g</strong> `;
+        if (gotas > 0) linea += `(${gotas} gotas) `;
+        linea += ` - Costo: <strong>$${formatNumber(costo)}</strong><br>`;
+        resultado += linea;
+      }
+
+      resultado += `<br><strong>Costo total por ${cantidad} toallas:</strong> $${formatNumber(costoTotal)}<br>`;
+      resultado += `<strong>Costo por toalla:</strong> $${formatNumber(costoTotal / cantidad)}<br>`;
+
+      document.getElementById('resultado').innerHTML = resultado;
+      document.getElementById('resultado').style.display = 'block';
+    }
+
+    function limpiarFormulario() {
+      document.getElementById('cantidad').value = 1;
+      document.getElementById('toalla').selectedIndex = 0;
+      document.getElementById('resultado').style.display = 'none';
+    }
+  </script>
 </body>
 
 </html>
