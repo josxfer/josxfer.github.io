@@ -5,31 +5,94 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Calculadora de Estampado</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; background: #f2f2f2; }
-    h1 { color: #333; }
-    .container { background: white; padding: 20px; border-radius: 8px; max-width: 600px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-    label { display: block; margin-top: 10px; }
-    input, select, button { width: 100%; padding: 8px; margin-top: 5px; }
-    .result { background: #e0f7fa; padding: 10px; border-radius: 5px; margin-top: 20px; }
+    :root {
+      --main-bg: #f0f4f8;
+      --card-bg: #ffffff;
+      --primary: #0077cc;
+      --accent: #00c2a8;
+      --text-color: #333;
+      --result-bg: #e0f7fa;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: var(--main-bg);
+      color: var(--text-color);
+    }
+
+    .container {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 600px;
+      margin: 40px auto;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--primary);
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    button {
+      margin-top: 20px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: var(--accent);
+    }
+
+    .result {
+      background: var(--result-bg);
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 30px;
+      font-size: 16px;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        margin: 20px;
+        padding: 15px;
+      }
+
+      input, select, button {
+        font-size: 14px;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Calculadora de Mezcla</h1>
+    <h1>Calculadora de Estampado</h1>
 
     <label for="toalla">Tipo de toalla:</label>
     <select id="toalla">
-        <option value="Nacional">Nacional</option>
-        <option value="Millonarios">Millonarios</option>
-        <option value="America">América</option>
-        <!-- <option value="Junior">Junior</option>
-        <option value="Huila">Huila</option>
-        <option value="Tolima">Tolima</option>
-        <option value="Colombia">Colombia</option> -->
-        <!-- <option value="Hello_Kitty">Hello Kitty</option>
-        <option value="Kuromy">Kuromy</option> -->
-        <!-- <option value="Sonic">Sonic</option>
-        <option value="Mariposas">Mariposas</option> -->
+      <option value="Nacional">Nacional</option>
+      <option value="Premium">Premium</option>
+      <option value="Económica">Económica</option>
+      <option value="Mariposas">Mariposas</option>
     </select>
 
     <label for="cantidad">Cantidad de toallas:</label>
@@ -43,10 +106,47 @@
 
   <script>
     const catalogo = {
-      Nacional: { base: 285, pigmentos: { verde_base: 2.72, verde_fluor: 2.45, amarillo_base: 0.36 } },
-      Millonarios: { base: 300, pigmentos: { azul_base: 3.2, azul_fluor: 3.5 } },
-      America: { base: 250, pigmentos: { rojo_base: 2.0, rojo_brillante: 0.8 } }
+      Nacional: {
+        base: 284,
+        colores: {
+          Verde: { verde_base: 2.72, verde_fluor: 2.45, amarillo_base: 0.36 }
+        }
+      },
+      Premium: {
+        base: 320,
+        colores: {
+          Unico: { azul: 3.0, rojo: 1.2, amarillo: 0.6 }
+        }
+      },
+      Económica: {
+        base: 250,
+        colores: {
+          Unico: { azul: 2.0, rojo: 0.8, amarillo: 0.4 }
+        }
+      },
+      Mariposas: {
+        base: 280,
+        colores: {
+          "Azul Cielo": { azul: 1.5, blanco: 0.5 },
+          "Aguamarina": { azul: 1.2, verde: 0.8 },
+          "Azul Rey": { azul: 2.0, negro: 0.3 }
+        }
+      }
     };
+
+    const precios = {
+      base: 6.41,
+      verde_base: 82.45,
+      verde_fluor: 82.46,
+      amarillo_base: 72.32,
+      blanco: 0.03,
+      verde: 0.045,
+      negro: 0.05
+    };
+
+    function formatNumber(num) {
+      return num.toLocaleString('es-ES', { minimumFractionDigits: 1, maximumFractionDigits: 2 });
+    }
 
     function calcularMezcla() {
       const tipo = document.getElementById('toalla').value;
@@ -54,14 +154,37 @@
       const data = catalogo[tipo];
 
       const totalBase = data.base * cantidad;
+      let resumenPigmentos = {};
+      let costoTotal = 0;
 
       let resultado = `<strong>Resultados para ${cantidad} toallas (${tipo}):</strong><br>`;
-      resultado += `Base: <strong>${totalBase.toFixed(1)} g</strong><br>`;
+      resultado += `Base: <strong>${formatNumber(totalBase)} g</strong><br>`;
+      const costoBase = totalBase * precios.base;
+      resultado += `Costo base: <strong>$${formatNumber(costoBase)}</strong><br><br>`;
+      costoTotal += costoBase;
 
-      for (const color in data.pigmentos) {
-        const totalPigmento = data.pigmentos[color] * cantidad;
-        resultado += `Pigmento ${color}: <strong>${totalPigmento.toFixed(1)} g</strong><br>`;
+      for (const color in data.colores) {
+        resultado += `<u>Color: ${color}</u><br>`;
+        const pigmentos = data.colores[color];
+
+        for (const pigmento in pigmentos) {
+          const totalPig = pigmentos[pigmento] * cantidad;
+          resumenPigmentos[pigmento] = (resumenPigmentos[pigmento] || 0) + totalPig;
+          resultado += `&nbsp;&nbsp;- ${pigmento}: ${formatNumber(totalPig)} g<br>`;
+        }
+        resultado += `<br>`;
       }
+
+      resultado += `<strong>Resumen total por pigmento:</strong><br>`;
+      for (const pigmento in resumenPigmentos) {
+        const gramos = resumenPigmentos[pigmento];
+        const costo = precios[pigmento] ? precios[pigmento] * gramos : 0;
+        resultado += `${pigmento}: <strong>${formatNumber(gramos)} g</strong> - Costo: <strong>$${formatNumber(costo)}</strong><br>`;
+        costoTotal += costo;
+      }
+
+      resultado += `<br><strong>Costo total por ${cantidad} toallas:</strong> $${formatNumber(costoTotal)}<br>`;
+      resultado += `<strong>Costo por toalla:</strong> $${formatNumber(costoTotal / cantidad)}<br>`;
 
       document.getElementById('resultado').innerHTML = resultado;
       document.getElementById('resultado').style.display = 'block';
